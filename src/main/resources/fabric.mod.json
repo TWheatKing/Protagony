@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "protagony",
+  "version": "${version}",
+  "name": "Protagony - an Incremental RPG Mod",
+  "description": "a Creative RPG Leveling Mod for Minecraft",
+  "authors": [
+    "TheWheatKing"
+  ],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/protagony/icon.png",
+  "environment": "*",
+  "custom": {
+    "cardinal-components": [
+      "protagony:player_data"
+    ]
+  },
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "com.twk.protagony.Protagony"
+      }
+    ],
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "com.twk.protagony.client.ProtagonyClient"
+      }
+    ],
+    "fabric-datagen": [
+      {
+        "adapter": "kotlin",
+        "value": "com.twk.protagony.datagen.ProtagonyDataGenerator"
+      }
+    ],
+    "cardinal-components-entity": [
+      {
+        "adapter": "kotlin",
+        "value": "com.twk.protagony.component.ModComponents"
+      }
+    ]
+  },
+  "mixins": [
+    "protagony.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": ">=${kotlin_loader_version}",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=21",
+    "fabric-api": "*",
+    "cardinal-components-base": ">=7.0.0",
+    "cardinal-components-entity": ">=7.0.0"
+  }
+}
