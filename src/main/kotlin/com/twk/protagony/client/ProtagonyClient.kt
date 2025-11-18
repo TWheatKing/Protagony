@@ -5,5 +5,7 @@ import net.fabricmc.api.ClientModInitializer
 class ProtagonyClient : ClientModInitializer {
 
     override fun onInitializeClient() {
+        // Register class selection client handler
+        ClassSelectionClientHandler.register()
     }
 }

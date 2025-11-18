@@ -1,5 +1,6 @@
 package com.twk.protagony
 
+import com.twk.protagony.network.ClassSelectionNetworking
 import net.fabricmc.api.ModInitializer
 import org.slf4j.LoggerFactory
 
@@ -9,6 +10,10 @@ object Protagony : ModInitializer {
 
     override fun onInitialize() {
         logger.info("Initializing Protagony mod")
-        // Your initialization code here
+
+        // Register class selection networking
+        ClassSelectionNetworking.register()
+
+        logger.info("Protagony mod initialized successfully!")
     }
 }
