@@ -1,12 +1,5 @@
 package com.twk.protagony.system.xp.listener
 
-import com.twk.protagony.system.xp.XpCalculator
-import net.fabricmc.fabric.api.event.player.UseItemCallback
-import net.minecraft.item.FishingRodItem
-import net.minecraft.server.network.ServerPlayerEntity
-import net.minecraft.util.ActionResult
-import net.minecraft.util.TypedActionResult
-
 object FishingXpListener {
 
     fun register() {

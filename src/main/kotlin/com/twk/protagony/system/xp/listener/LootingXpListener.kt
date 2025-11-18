@@ -4,12 +4,13 @@ import com.twk.protagony.system.xp.XpCalculator
 import net.fabricmc.fabric.api.event.player.UseBlockCallback
 import net.minecraft.block.Blocks
 import net.minecraft.block.entity.ChestBlockEntity
+import net.minecraft.block.entity.LootableContainerBlockEntity
 import net.minecraft.server.network.ServerPlayerEntity
 import net.minecraft.util.ActionResult
 
 object LootingXpListener {
 
-    private val openedChests = mutableSetOf<Pair<Long, String>>() // Player UUID + Chest position
+    private val openedChests = mutableSetOf<Pair<Long, String>>()
     private val brokenPots = mutableSetOf<Pair<Long, String>>()
 
     fun register() {
@@ -18,11 +19,10 @@ object LootingXpListener {
             if (!world.isClient && player is ServerPlayerEntity) {
                 val pos = hitResult.blockPos
                 val blockEntity = world.getBlockEntity(pos)
-                
-                if (blockEntity is ChestBlockEntity) {
-                    // Check if chest has loot table (naturally generated)
-                    val lootTableId = blockEntity.lootTableId
-                    if (lootTableId != null) {
+
+                if (blockEntity is LootableContainerBlockEntity) {
+                    val lootTable = blockEntity.lootTable
+                    if (lootTable != null) {
                         val key = player.uuid.leastSignificantBits to pos.toShortString()
                         if (!openedChests.contains(key)) {
                             openedChests.add(key)
@@ -43,7 +43,6 @@ object LootingXpListener {
         net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents.BEFORE.register { world, player, pos, state, blockEntity ->
             if (!world.isClient && player is ServerPlayerEntity) {
                 if (state.block == Blocks.DECORATED_POT) {
-                    // Check if pot has loot table (naturally generated)
                     val potEntity = blockEntity as? net.minecraft.block.entity.DecoratedPotBlockEntity
                     if (potEntity?.lootTable != null) {
                         val key = player.uuid.leastSignificantBits to pos.toShortString()
@@ -61,12 +60,8 @@ object LootingXpListener {
             }
             true
         }
-
-        // Villager trade detection requires mixin
-        // TODO: Implement mixin to MerchantInventory or VillagerEntity trade handling
     }
 
-    // Helper method to be called from mixin for villager trades
     fun onVillagerTrade(player: ServerPlayerEntity) {
         XpCalculator.awardXp(
             player,
