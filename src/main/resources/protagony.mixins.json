@@ -4,6 +4,10 @@
   "package": "com.twk.protagony.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "FishingBobberEntityMixin",
+    "CraftingResultSlotMixin",
+    "EnchantmentScreenHandlerMixin",
+    "MerchantEntityMixin"
   ],
   "client": [
   ],
